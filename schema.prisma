@@ -1,0 +1,29 @@
+datasource sqlite {
+  url      = env("DATABASE_URL")
+  provider = "sqlite"
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "node_modules/.prisma/client"
+}
+
+model User {
+  id       Int      @id @default(autoincrement())
+  name     String?
+  email    String?  @unique
+  password String?
+  isAdmin  Boolean?
+  posts    Post[]   @relation("Postuser")
+}
+
+model Post {
+  id      Int     @id @default(autoincrement())
+  title   String?
+  slug    String?
+  content String?
+  user    User?   @relation("Postuser", fields: [userId], references: [id])
+  userId  Int?    @map("user")
+
+  @@index([userId])
+}
