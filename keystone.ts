@@ -60,9 +60,7 @@ const { withAuth } = createAuth({
 // withAuth applies the signin functionality to the keystone config
 export default withAuth(
   config({
-    db: process.env.DATABASE_URL
-      ? { provider: "postgresql", url: process.env.DATABASE_URL }
-      : { provider: "sqlite", url: "file:./keystone.db" },
+    db: { provider: "postgresql", url: process.env.DATABASE_URL },
     lists,
     ui: {},
     session: withItemData(

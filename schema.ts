@@ -10,7 +10,7 @@ export const lists = createSchema({
     access: {
       // Only allow admins to delete users
       delete: ({ session }) => session?.data?.isAdmin,
-      read: ({ session, item }) =>
+      read: ({ session }) =>
         session ? session.data.isAdmin || { id: session.itemId } : false,
     },
     ui: {
