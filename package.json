@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "start": "next start",
-    "build": "next build"
+    "build": "yarn && yarn keystone-next build && yarn keystone-next prisma migrate deploy"
   },
   "dependencies": {
     "@keystone-next/admin-ui": "^13.0.0",
