@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "start": "next start",
-    "build": "yarn && next build && yarn keystone-next build && yarn keystone-next prisma migrate deploy",
+    "build": "keystone-next build && next build",
     "postinstall": "keystone-next postinstall"
   },
   "dependencies": {
