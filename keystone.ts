@@ -5,13 +5,14 @@ import {
 } from "@keystone-next/keystone/session";
 import { createAuth } from "@keystone-next/auth";
 import { lists } from "./schema";
+import "dotenv/config";
 
 /**
  * TODO: Implement validateItem. Would be invoked by the getItem() method in
  * packages-next/auth/src/getExtendGraphQLSchema.ts
  */
 
-const sessionSecret = "-- DEV COOKIE SECRET; CHANGE ME --";
+const sessionSecret = process.env.SESSION_SECRET;
 const sessionMaxAge = 60 * 60 * 24 * 30; // 30 days
 
 // createAuth configures signin functionality based on the config below. Note this only implements
@@ -62,7 +63,23 @@ export default withAuth(
   config({
     db: { provider: "postgresql", url: process.env.DATABASE_URL },
     lists,
-    ui: {},
+    ui: {
+      isAccessAllowed: ({ session }) => !!session,
+      publicPages: ["/welcome"],
+      getAdditionalFiles: [
+        async (config) => [
+          {
+            mode: "write",
+            outputPath: "pages/welcome.js",
+            src: `
+              import { jsx } from '@keystone-ui/core';
+              export default function Welcome() {
+                return (<h1>Welcome to my keystone system</h1>);
+              }`,
+          },
+        ],
+      ],
+    },
     session: withItemData(
       // Stateless sessions will store the listKey and itemId of the signed-in user in a cookie
       statelessSessions({
@@ -72,7 +89,7 @@ export default withAuth(
         secret: sessionSecret,
       }),
       // withItemData will fetch these fields for signed-in User items to populate session.data
-      { User: "name isAdmin" }
+      { User: "id name email isAdmin" }
     ),
     experimental: {
       enableNextJsGraphqlApiEndpoint: true,

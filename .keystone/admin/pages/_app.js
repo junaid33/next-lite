@@ -179,6 +179,6 @@ export default getApp({
     ],
   },
   fieldViews: [view0, view1, view2, view3, view4],
-  adminMetaHash: '15j621f',
+  adminMetaHash: '1way7mk',
   adminConfig: adminConfig,
 });
