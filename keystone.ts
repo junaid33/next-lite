@@ -65,20 +65,6 @@ export default withAuth(
     lists,
     ui: {
       isAccessAllowed: ({ session }) => !!session,
-      publicPages: ["/welcome"],
-      getAdditionalFiles: [
-        async (config) => [
-          {
-            mode: "write",
-            outputPath: "pages/welcome.js",
-            src: `
-              import { jsx } from '@keystone-ui/core';
-              export default function Welcome() {
-                return (<h1>Welcome to my keystone system</h1>);
-              }`,
-          },
-        ],
-      ],
     },
     session: withItemData(
       // Stateless sessions will store the listKey and itemId of the signed-in user in a cookie
